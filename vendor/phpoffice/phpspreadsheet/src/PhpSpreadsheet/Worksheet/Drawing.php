@@ -45,8 +45,10 @@ class Drawing extends BaseDrawing
 
     /**
      * Get indexed filename (using image index).
+     *
+     * @return string
      */
-    public function getIndexedFilename(): string
+    public function getIndexedFilename()
     {
         $fileName = $this->getFilename();
         $fileName = str_replace(' ', '_', $fileName);
@@ -79,20 +81,20 @@ class Drawing extends BaseDrawing
     /**
      * Set Path.
      *
-     * @param string $path File path
-     * @param bool $verifyFile Verify file
+     * @param string $pValue File path
+     * @param bool $pVerifyFile Verify file
      *
      * @return $this
      */
-    public function setPath($path, $verifyFile = true)
+    public function setPath($pValue, $pVerifyFile = true)
     {
-        if ($verifyFile) {
+        if ($pVerifyFile) {
             // Check if a URL has been passed. https://stackoverflow.com/a/2058596/1252979
-            if (filter_var($path, FILTER_VALIDATE_URL)) {
-                $this->path = $path;
+            if (filter_var($pValue, FILTER_VALIDATE_URL)) {
+                $this->path = $pValue;
                 // Implicit that it is a URL, rather store info than running check above on value in other places.
                 $this->isUrl = true;
-                $imageContents = file_get_contents($path);
+                $imageContents = file_get_contents($pValue);
                 $filePath = tempnam(sys_get_temp_dir(), 'Drawing');
                 if ($filePath) {
                     file_put_contents($filePath, $imageContents);
@@ -104,17 +106,17 @@ class Drawing extends BaseDrawing
                         unlink($filePath);
                     }
                 }
-            } elseif (file_exists($path)) {
-                $this->path = $path;
+            } elseif (file_exists($pValue)) {
+                $this->path = $pValue;
                 if ($this->width == 0 && $this->height == 0) {
                     // Get width/height
-                    [$this->width, $this->height] = getimagesize($path);
+                    [$this->width, $this->height] = getimagesize($pValue);
                 }
             } else {
-                throw new PhpSpreadsheetException("File $path not found!");
+                throw new PhpSpreadsheetException("File $pValue not found!");
             }
         } else {
-            $this->path = $path;
+            $this->path = $pValue;
         }
 
         return $this;

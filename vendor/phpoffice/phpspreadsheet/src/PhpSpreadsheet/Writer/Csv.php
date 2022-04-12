@@ -149,13 +149,13 @@ class Csv extends BaseWriter
     /**
      * Set delimiter.
      *
-     * @param string $delimiter Delimiter, defaults to ','
+     * @param string $pValue Delimiter, defaults to ','
      *
      * @return $this
      */
-    public function setDelimiter($delimiter)
+    public function setDelimiter($pValue)
     {
-        $this->delimiter = $delimiter;
+        $this->delimiter = $pValue;
 
         return $this;
     }
@@ -173,13 +173,13 @@ class Csv extends BaseWriter
     /**
      * Set enclosure.
      *
-     * @param string $enclosure Enclosure, defaults to "
+     * @param string $pValue Enclosure, defaults to "
      *
      * @return $this
      */
-    public function setEnclosure($enclosure = '"')
+    public function setEnclosure($pValue = '"')
     {
-        $this->enclosure = $enclosure;
+        $this->enclosure = $pValue;
 
         return $this;
     }
@@ -197,13 +197,13 @@ class Csv extends BaseWriter
     /**
      * Set line ending.
      *
-     * @param string $lineEnding Line ending, defaults to OS line ending (PHP_EOL)
+     * @param string $pValue Line ending, defaults to OS line ending (PHP_EOL)
      *
      * @return $this
      */
-    public function setLineEnding($lineEnding)
+    public function setLineEnding($pValue)
     {
-        $this->lineEnding = $lineEnding;
+        $this->lineEnding = $pValue;
 
         return $this;
     }
@@ -221,13 +221,13 @@ class Csv extends BaseWriter
     /**
      * Set whether BOM should be used.
      *
-     * @param bool $useBOM Use UTF-8 byte-order mark? Defaults to false
+     * @param bool $pValue Use UTF-8 byte-order mark? Defaults to false
      *
      * @return $this
      */
-    public function setUseBOM($useBOM)
+    public function setUseBOM($pValue)
     {
-        $this->useBOM = $useBOM;
+        $this->useBOM = $pValue;
 
         return $this;
     }
@@ -245,13 +245,13 @@ class Csv extends BaseWriter
     /**
      * Set whether a separator line should be included as the first line of the file.
      *
-     * @param bool $includeSeparatorLine Use separator line? Defaults to false
+     * @param bool $pValue Use separator line? Defaults to false
      *
      * @return $this
      */
-    public function setIncludeSeparatorLine($includeSeparatorLine)
+    public function setIncludeSeparatorLine($pValue)
     {
-        $this->includeSeparatorLine = $includeSeparatorLine;
+        $this->includeSeparatorLine = $pValue;
 
         return $this;
     }
@@ -269,14 +269,14 @@ class Csv extends BaseWriter
     /**
      * Set whether the file should be saved with full Excel Compatibility.
      *
-     * @param bool $excelCompatibility Set the file to be written as a fully Excel compatible csv file
+     * @param bool $pValue Set the file to be written as a fully Excel compatible csv file
      *                                Note that this overrides other settings such as useBOM, enclosure and delimiter
      *
      * @return $this
      */
-    public function setExcelCompatibility($excelCompatibility)
+    public function setExcelCompatibility($pValue)
     {
-        $this->excelCompatibility = $excelCompatibility;
+        $this->excelCompatibility = $pValue;
 
         return $this;
     }
@@ -294,13 +294,13 @@ class Csv extends BaseWriter
     /**
      * Set sheet index.
      *
-     * @param int $sheetIndex Sheet index
+     * @param int $pValue Sheet index
      *
      * @return $this
      */
-    public function setSheetIndex($sheetIndex)
+    public function setSheetIndex($pValue)
     {
-        $this->sheetIndex = $sheetIndex;
+        $this->sheetIndex = $pValue;
 
         return $this;
     }
@@ -318,13 +318,13 @@ class Csv extends BaseWriter
     /**
      * Set output encoding.
      *
-     * @param string $outputEnconding Output encoding
+     * @param string $pValue Output encoding
      *
      * @return $this
      */
-    public function setOutputEncoding($outputEnconding)
+    public function setOutputEncoding($pValue)
     {
-        $this->outputEncoding = $outputEnconding;
+        $this->outputEncoding = $pValue;
 
         return $this;
     }
@@ -361,10 +361,10 @@ class Csv extends BaseWriter
     /**
      * Write line to CSV file.
      *
-     * @param resource $fileHandle PHP filehandle
-     * @param array $values Array containing values in a row
+     * @param resource $pFileHandle PHP filehandle
+     * @param array $pValues Array containing values in a row
      */
-    private function writeLine($fileHandle, array $values): void
+    private function writeLine($pFileHandle, array $pValues): void
     {
         // No leading delimiter
         $delimiter = '';
@@ -372,7 +372,7 @@ class Csv extends BaseWriter
         // Build the line
         $line = '';
 
-        foreach ($values as $element) {
+        foreach ($pValues as $element) {
             $element = self::elementToString($element);
             // Add delimiter
             $line .= $delimiter;
@@ -399,6 +399,6 @@ class Csv extends BaseWriter
         if ($this->outputEncoding != '') {
             $line = mb_convert_encoding($line, $this->outputEncoding);
         }
-        fwrite($fileHandle, $line);
+        fwrite($pFileHandle, $line);
     }
 }

@@ -103,16 +103,16 @@ class Gnumeric extends BaseReader
     /**
      * Reads names of the worksheets from a file, without parsing the whole file to a Spreadsheet object.
      *
-     * @param string $filename
+     * @param string $pFilename
      *
      * @return array
      */
-    public function listWorksheetNames($filename)
+    public function listWorksheetNames($pFilename)
     {
-        File::assertFile($filename);
+        File::assertFile($pFilename);
 
         $xml = new XMLReader();
-        $xml->xml($this->securityScanner->scanFile('compress.zlib://' . realpath($filename)), null, Settings::getLibXmlLoaderOptions());
+        $xml->xml($this->securityScanner->scanFile('compress.zlib://' . realpath($pFilename)), null, Settings::getLibXmlLoaderOptions());
         $xml->setParserProperty(2, true);
 
         $worksheetNames = [];
@@ -132,16 +132,16 @@ class Gnumeric extends BaseReader
     /**
      * Return worksheet info (Name, Last Column Letter, Last Column Index, Total Rows, Total Columns).
      *
-     * @param string $filename
+     * @param string $pFilename
      *
      * @return array
      */
-    public function listWorksheetInfo($filename)
+    public function listWorksheetInfo($pFilename)
     {
-        File::assertFile($filename);
+        File::assertFile($pFilename);
 
         $xml = new XMLReader();
-        $xml->xml($this->securityScanner->scanFile('compress.zlib://' . realpath($filename)), null, Settings::getLibXmlLoaderOptions());
+        $xml->xml($this->securityScanner->scanFile('compress.zlib://' . realpath($pFilename)), null, Settings::getLibXmlLoaderOptions());
         $xml->setParserProperty(2, true);
 
         $worksheetInfo = [];
@@ -245,12 +245,12 @@ class Gnumeric extends BaseReader
     /**
      * Loads from file into Spreadsheet instance.
      */
-    public function loadIntoExisting(string $filename, Spreadsheet $spreadsheet): Spreadsheet
+    public function loadIntoExisting(string $pFilename, Spreadsheet $spreadsheet): Spreadsheet
     {
         $this->spreadsheet = $spreadsheet;
-        File::assertFile($filename);
+        File::assertFile($pFilename);
 
-        $gFileData = $this->gzfileGetContents($filename);
+        $gFileData = $this->gzfileGetContents($pFilename);
 
         $xml2 = simplexml_load_string($this->securityScanner->scan($gFileData), 'SimpleXMLElement', Settings::getLibXmlLoaderOptions());
         $xml = self::testSimpleXml($xml2);

@@ -2,7 +2,6 @@
 
 namespace PhpOffice\PhpSpreadsheet\Reader;
 
-use PhpOffice\PhpSpreadsheet\Cell\Cell;
 use PhpOffice\PhpSpreadsheet\Cell\Coordinate;
 use PhpOffice\PhpSpreadsheet\Reader\Csv\Delimiter;
 use PhpOffice\PhpSpreadsheet\Reader\Exception as ReaderException;
@@ -124,9 +123,9 @@ class Csv extends BaseReader
         return $this->inputEncoding;
     }
 
-    public function setFallbackEncoding(string $fallbackEncoding): self
+    public function setFallbackEncoding(string $pValue): self
     {
-        $this->fallbackEncoding = $fallbackEncoding;
+        $this->fallbackEncoding = $pValue;
 
         return $this;
     }
@@ -315,13 +314,11 @@ class Csv extends BaseReader
 
         // Loop through each line of the file in turn
         $rowData = fgetcsv($fileHandle, 0, $this->delimiter ?? '', $this->enclosure, $this->escapeCharacter);
-        $valueBinder = Cell::getValueBinder();
-        $preserveBooleanString = method_exists($valueBinder, 'getBooleanConversion') && $valueBinder->getBooleanConversion();
         while (is_array($rowData)) {
             $noOutputYet = true;
             $columnLetter = 'A';
             foreach ($rowData as $rowDatum) {
-                $this->convertBoolean($rowDatum, $preserveBooleanString);
+                self::convertBoolean($rowDatum);
                 if ($rowDatum !== '' && $this->readFilter->readCell($columnLetter, $currentRow)) {
                     if ($this->contiguous) {
                         if ($noOutputYet) {
@@ -354,9 +351,9 @@ class Csv extends BaseReader
      *
      * @param mixed $rowDatum
      */
-    private function convertBoolean(&$rowDatum, bool $preserveBooleanString): void
+    private static function convertBoolean(&$rowDatum): void
     {
-        if (is_string($rowDatum) && !$preserveBooleanString) {
+        if (is_string($rowDatum)) {
             if (strcasecmp('true', $rowDatum) === 0) {
                 $rowDatum = true;
             } elseif (strcasecmp('false', $rowDatum) === 0) {
@@ -408,7 +405,7 @@ class Csv extends BaseReader
 
     public function setContiguous(bool $contiguous): self
     {
-        $this->contiguous = $contiguous;
+        $this->contiguous = (bool) $contiguous;
 
         return $this;
     }

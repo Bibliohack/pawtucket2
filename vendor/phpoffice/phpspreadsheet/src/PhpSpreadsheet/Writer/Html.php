@@ -302,13 +302,13 @@ class Html extends BaseWriter
     /**
      * Set sheet index.
      *
-     * @param int $sheetIndex Sheet index
+     * @param int $pValue Sheet index
      *
      * @return $this
      */
-    public function setSheetIndex($sheetIndex)
+    public function setSheetIndex($pValue)
     {
-        $this->sheetIndex = $sheetIndex;
+        $this->sheetIndex = $pValue;
 
         return $this;
     }
@@ -326,13 +326,13 @@ class Html extends BaseWriter
     /**
      * Set sheet index.
      *
-     * @param bool $generateSheetNavigationBlock Flag indicating whether the sheet navigation block should be generated or not
+     * @param bool $pValue Flag indicating whether the sheet navigation block should be generated or not
      *
      * @return $this
      */
-    public function setGenerateSheetNavigationBlock($generateSheetNavigationBlock)
+    public function setGenerateSheetNavigationBlock($pValue)
     {
-        $this->generateSheetNavigationBlock = (bool) $generateSheetNavigationBlock;
+        $this->generateSheetNavigationBlock = (bool) $pValue;
 
         return $this;
     }
@@ -359,11 +359,11 @@ class Html extends BaseWriter
     /**
      * Generate HTML header.
      *
-     * @param bool $includeStyles Include styles?
+     * @param bool $pIncludeStyles Include styles?
      *
      * @return string
      */
-    public function generateHTMLHeader($includeStyles = false)
+    public function generateHTMLHeader($pIncludeStyles = false)
     {
         // Construct HTML
         $properties = $this->spreadsheet->getProperties();
@@ -382,7 +382,7 @@ class Html extends BaseWriter
         $html .= self::generateMeta($properties->getCompany(), 'company');
         $html .= self::generateMeta($properties->getManager(), 'manager');
 
-        $html .= $includeStyles ? $this->generateStyles(true) : $this->generatePageDeclarations(true);
+        $html .= $pIncludeStyles ? $this->generateStyles(true) : $this->generatePageDeclarations(true);
 
         $html .= '  </head>' . PHP_EOL;
         $html .= '' . PHP_EOL;
@@ -974,34 +974,36 @@ class Html extends BaseWriter
      *
      * @return array
      */
-    private function createCSSStyle(Style $style)
+    private function createCSSStyle(Style $pStyle)
     {
         // Create CSS
         return array_merge(
-            $this->createCSSStyleAlignment($style->getAlignment()),
-            $this->createCSSStyleBorders($style->getBorders()),
-            $this->createCSSStyleFont($style->getFont()),
-            $this->createCSSStyleFill($style->getFill())
+            $this->createCSSStyleAlignment($pStyle->getAlignment()),
+            $this->createCSSStyleBorders($pStyle->getBorders()),
+            $this->createCSSStyleFont($pStyle->getFont()),
+            $this->createCSSStyleFill($pStyle->getFill())
         );
     }
 
     /**
-     * Create CSS style.
+     * Create CSS style (\PhpOffice\PhpSpreadsheet\Style\Alignment).
+     *
+     * @param Alignment $pStyle \PhpOffice\PhpSpreadsheet\Style\Alignment
      *
      * @return array
      */
-    private function createCSSStyleAlignment(Alignment $alignment)
+    private function createCSSStyleAlignment(Alignment $pStyle)
     {
         // Construct CSS
         $css = [];
 
         // Create CSS
-        $css['vertical-align'] = $this->mapVAlign($alignment->getVertical());
-        $textAlign = $this->mapHAlign($alignment->getHorizontal());
+        $css['vertical-align'] = $this->mapVAlign($pStyle->getVertical());
+        $textAlign = $this->mapHAlign($pStyle->getHorizontal());
         if ($textAlign) {
             $css['text-align'] = $textAlign;
             if (in_array($textAlign, ['left', 'right'])) {
-                $css['padding-' . $textAlign] = (string) ((int) $alignment->getIndent() * 9) . 'px';
+                $css['padding-' . $textAlign] = (string) ((int) $pStyle->getIndent() * 9) . 'px';
             }
         }
 
@@ -1009,88 +1011,88 @@ class Html extends BaseWriter
     }
 
     /**
-     * Create CSS style.
+     * Create CSS style (\PhpOffice\PhpSpreadsheet\Style\Font).
      *
      * @return array
      */
-    private function createCSSStyleFont(Font $font)
+    private function createCSSStyleFont(Font $pStyle)
     {
         // Construct CSS
         $css = [];
 
         // Create CSS
-        if ($font->getBold()) {
+        if ($pStyle->getBold()) {
             $css['font-weight'] = 'bold';
         }
-        if ($font->getUnderline() != Font::UNDERLINE_NONE && $font->getStrikethrough()) {
+        if ($pStyle->getUnderline() != Font::UNDERLINE_NONE && $pStyle->getStrikethrough()) {
             $css['text-decoration'] = 'underline line-through';
-        } elseif ($font->getUnderline() != Font::UNDERLINE_NONE) {
+        } elseif ($pStyle->getUnderline() != Font::UNDERLINE_NONE) {
             $css['text-decoration'] = 'underline';
-        } elseif ($font->getStrikethrough()) {
+        } elseif ($pStyle->getStrikethrough()) {
             $css['text-decoration'] = 'line-through';
         }
-        if ($font->getItalic()) {
+        if ($pStyle->getItalic()) {
             $css['font-style'] = 'italic';
         }
 
-        $css['color'] = '#' . $font->getColor()->getRGB();
-        $css['font-family'] = '\'' . $font->getName() . '\'';
-        $css['font-size'] = $font->getSize() . 'pt';
+        $css['color'] = '#' . $pStyle->getColor()->getRGB();
+        $css['font-family'] = '\'' . $pStyle->getName() . '\'';
+        $css['font-size'] = $pStyle->getSize() . 'pt';
 
         return $css;
     }
 
     /**
-     * Create CSS style.
+     * Create CSS style (Borders).
      *
-     * @param Borders $borders Borders
+     * @param Borders $pStyle Borders
      *
      * @return array
      */
-    private function createCSSStyleBorders(Borders $borders)
+    private function createCSSStyleBorders(Borders $pStyle)
     {
         // Construct CSS
         $css = [];
 
         // Create CSS
-        $css['border-bottom'] = $this->createCSSStyleBorder($borders->getBottom());
-        $css['border-top'] = $this->createCSSStyleBorder($borders->getTop());
-        $css['border-left'] = $this->createCSSStyleBorder($borders->getLeft());
-        $css['border-right'] = $this->createCSSStyleBorder($borders->getRight());
+        $css['border-bottom'] = $this->createCSSStyleBorder($pStyle->getBottom());
+        $css['border-top'] = $this->createCSSStyleBorder($pStyle->getTop());
+        $css['border-left'] = $this->createCSSStyleBorder($pStyle->getLeft());
+        $css['border-right'] = $this->createCSSStyleBorder($pStyle->getRight());
 
         return $css;
     }
 
     /**
-     * Create CSS style.
+     * Create CSS style (Border).
      *
-     * @param Border $border Border
+     * @param Border $pStyle Border
      *
      * @return string
      */
-    private function createCSSStyleBorder(Border $border)
+    private function createCSSStyleBorder(Border $pStyle)
     {
         //    Create CSS - add !important to non-none border styles for merged cells
-        $borderStyle = $this->mapBorderStyle($border->getBorderStyle());
+        $borderStyle = $this->mapBorderStyle($pStyle->getBorderStyle());
 
-        return $borderStyle . ' #' . $border->getColor()->getRGB() . (($borderStyle == 'none') ? '' : ' !important');
+        return $borderStyle . ' #' . $pStyle->getColor()->getRGB() . (($borderStyle == 'none') ? '' : ' !important');
     }
 
     /**
      * Create CSS style (Fill).
      *
-     * @param Fill $fill Fill
+     * @param Fill $pStyle Fill
      *
      * @return array
      */
-    private function createCSSStyleFill(Fill $fill)
+    private function createCSSStyleFill(Fill $pStyle)
     {
         // Construct HTML
         $css = [];
 
         // Create CSS
-        $value = $fill->getFillType() == Fill::FILL_NONE ?
-            'white' : '#' . $fill->getStartColor()->getRGB();
+        $value = $pStyle->getFillType() == Fill::FILL_NONE ?
+            'white' : '#' . $pStyle->getStartColor()->getRGB();
         $css['background-color'] = $value;
 
         return $css;
@@ -1191,18 +1193,18 @@ class Html extends BaseWriter
      * Generate row start.
      *
      * @param int $sheetIndex Sheet index (0-based)
-     * @param int $row row number
+     * @param int $pRow row number
      *
      * @return string
      */
-    private function generateRowStart(Worksheet $worksheet, $sheetIndex, $row)
+    private function generateRowStart(Worksheet $worksheet, $sheetIndex, $pRow)
     {
         $html = '';
         if (count($worksheet->getBreaks()) > 0) {
             $breaks = $worksheet->getBreaks();
 
             // check if a break is needed before this row
-            if (isset($breaks['A' . $row])) {
+            if (isset($breaks['A' . $pRow])) {
                 // close table: </table>
                 $html .= $this->generateTableFooter();
                 if ($this->isPdf && $this->useInlineCss) {
@@ -1217,10 +1219,10 @@ class Html extends BaseWriter
 
         // Write row start
         if (!$this->useInlineCss) {
-            $html .= '          <tr class="row' . $row . '">' . PHP_EOL;
+            $html .= '          <tr class="row' . $pRow . '">' . PHP_EOL;
         } else {
-            $style = isset($this->cssStyles['table.sheet' . $sheetIndex . ' tr.row' . $row])
-                ? $this->assembleCSS($this->cssStyles['table.sheet' . $sheetIndex . ' tr.row' . $row]) : '';
+            $style = isset($this->cssStyles['table.sheet' . $sheetIndex . ' tr.row' . $pRow])
+                ? $this->assembleCSS($this->cssStyles['table.sheet' . $sheetIndex . ' tr.row' . $pRow]) : '';
 
             $html .= '          <tr style="' . $style . '">' . PHP_EOL;
         }
@@ -1228,12 +1230,12 @@ class Html extends BaseWriter
         return $html;
     }
 
-    private function generateRowCellCss(Worksheet $worksheet, $cellAddress, $row, $columnNumber)
+    private function generateRowCellCss(Worksheet $worksheet, $cellAddress, $pRow, $colNum)
     {
         $cell = ($cellAddress > '') ? $worksheet->getCell($cellAddress) : '';
-        $coordinate = Coordinate::stringFromColumnIndex($columnNumber + 1) . ($row + 1);
+        $coordinate = Coordinate::stringFromColumnIndex($colNum + 1) . ($pRow + 1);
         if (!$this->useInlineCss) {
-            $cssClass = 'column' . $columnNumber;
+            $cssClass = 'column' . $colNum;
         } else {
             $cssClass = [];
             // The statements below do nothing.
@@ -1379,7 +1381,7 @@ class Html extends BaseWriter
         return $html;
     }
 
-    private function generateRowWriteCell(&$html, Worksheet $worksheet, $coordinate, $cellType, $cellData, $colSpan, $rowSpan, $cssClass, $colNum, $sheetIndex, $row): void
+    private function generateRowWriteCell(&$html, Worksheet $worksheet, $coordinate, $cellType, $cellData, $colSpan, $rowSpan, $cssClass, $colNum, $sheetIndex, $pRow): void
     {
         // Image?
         $htmlx = $this->writeImageInCell($worksheet, $coordinate);
@@ -1414,8 +1416,8 @@ class Html extends BaseWriter
 
             // We must also explicitly write the height of the <td> element because TCPDF
             // does not recognize e.g. <tr style="height:50pt">
-            if (isset($this->cssStyles['table.sheet' . $sheetIndex . ' tr.row' . $row]['height'])) {
-                $height = $this->cssStyles['table.sheet' . $sheetIndex . ' tr.row' . $row]['height'];
+            if (isset($this->cssStyles['table.sheet' . $sheetIndex . ' tr.row' . $pRow]['height'])) {
+                $height = $this->cssStyles['table.sheet' . $sheetIndex . ' tr.row' . $pRow]['height'];
                 $xcssClass['height'] = $height;
             }
             //** end of redundant code **
@@ -1442,22 +1444,22 @@ class Html extends BaseWriter
     /**
      * Generate row.
      *
-     * @param array $values Array containing cells in a row
-     * @param int $row Row number (0-based)
+     * @param array $pValues Array containing cells in a row
+     * @param int $pRow Row number (0-based)
      * @param string $cellType eg: 'td'
      *
      * @return string
      */
-    private function generateRow(Worksheet $worksheet, array $values, $row, $cellType)
+    private function generateRow(Worksheet $worksheet, array $pValues, $pRow, $cellType)
     {
         // Sheet index
         $sheetIndex = $worksheet->getParent()->getIndex($worksheet);
-        $html = $this->generateRowStart($worksheet, $sheetIndex, $row);
+        $html = $this->generateRowStart($worksheet, $sheetIndex, $pRow);
 
         // Write cells
         $colNum = 0;
-        foreach ($values as $cellAddress) {
-            [$cell, $cssClass, $coordinate] = $this->generateRowCellCss($worksheet, $cellAddress, $row, $colNum);
+        foreach ($pValues as $cellAddress) {
+            [$cell, $cssClass, $coordinate] = $this->generateRowCellCss($worksheet, $cellAddress, $pRow, $colNum);
 
             $colSpan = 1;
             $rowSpan = 1;
@@ -1471,20 +1473,20 @@ class Html extends BaseWriter
             }
 
             // Should the cell be written or is it swallowed by a rowspan or colspan?
-            $writeCell = !(isset($this->isSpannedCell[$worksheet->getParent()->getIndex($worksheet)][$row + 1][$colNum])
-                && $this->isSpannedCell[$worksheet->getParent()->getIndex($worksheet)][$row + 1][$colNum]);
+            $writeCell = !(isset($this->isSpannedCell[$worksheet->getParent()->getIndex($worksheet)][$pRow + 1][$colNum])
+                && $this->isSpannedCell[$worksheet->getParent()->getIndex($worksheet)][$pRow + 1][$colNum]);
 
             // Colspan and Rowspan
             $colspan = 1;
             $rowspan = 1;
-            if (isset($this->isBaseCell[$worksheet->getParent()->getIndex($worksheet)][$row + 1][$colNum])) {
-                $spans = $this->isBaseCell[$worksheet->getParent()->getIndex($worksheet)][$row + 1][$colNum];
+            if (isset($this->isBaseCell[$worksheet->getParent()->getIndex($worksheet)][$pRow + 1][$colNum])) {
+                $spans = $this->isBaseCell[$worksheet->getParent()->getIndex($worksheet)][$pRow + 1][$colNum];
                 $rowSpan = $spans['rowspan'];
                 $colSpan = $spans['colspan'];
 
                 //    Also apply style from last cell in merge to fix borders -
                 //        relies on !important for non-none border declarations in createCSSStyleBorder
-                $endCellCoord = Coordinate::stringFromColumnIndex($colNum + $colSpan) . ($row + $rowSpan);
+                $endCellCoord = Coordinate::stringFromColumnIndex($colNum + $colSpan) . ($pRow + $rowSpan);
                 if (!$this->useInlineCss) {
                     $cssClass .= ' style' . $worksheet->getCell($endCellCoord)->getXfIndex();
                 }
@@ -1492,7 +1494,7 @@ class Html extends BaseWriter
 
             // Write
             if ($writeCell) {
-                $this->generateRowWriteCell($html, $worksheet, $coordinate, $cellType, $cellData, $colSpan, $rowSpan, $cssClass, $colNum, $sheetIndex, $row);
+                $this->generateRowWriteCell($html, $worksheet, $coordinate, $cellType, $cellData, $colSpan, $rowSpan, $cssClass, $colNum, $sheetIndex, $pRow);
             }
 
             // Next column
@@ -1511,10 +1513,10 @@ class Html extends BaseWriter
      *
      * @return string
      */
-    private function assembleCSS(array $values = [])
+    private function assembleCSS(array $pValue = [])
     {
         $pairs = [];
-        foreach ($values as $property => $value) {
+        foreach ($pValue as $property => $value) {
             $pairs[] = $property . ':' . $value;
         }
         $string = implode('; ', $pairs);
@@ -1535,13 +1537,13 @@ class Html extends BaseWriter
     /**
      * Set images root.
      *
-     * @param string $imagesRoot
+     * @param string $pValue
      *
      * @return $this
      */
-    public function setImagesRoot($imagesRoot)
+    public function setImagesRoot($pValue)
     {
-        $this->imagesRoot = $imagesRoot;
+        $this->imagesRoot = $pValue;
 
         return $this;
     }
@@ -1559,13 +1561,13 @@ class Html extends BaseWriter
     /**
      * Set embed images.
      *
-     * @param bool $embedImages
+     * @param bool $pValue
      *
      * @return $this
      */
-    public function setEmbedImages($embedImages)
+    public function setEmbedImages($pValue)
     {
-        $this->embedImages = $embedImages;
+        $this->embedImages = $pValue;
 
         return $this;
     }
@@ -1583,13 +1585,13 @@ class Html extends BaseWriter
     /**
      * Set use inline CSS?
      *
-     * @param bool $useInlineCss
+     * @param bool $pValue
      *
      * @return $this
      */
-    public function setUseInlineCss($useInlineCss)
+    public function setUseInlineCss($pValue)
     {
-        $this->useInlineCss = $useInlineCss;
+        $this->useInlineCss = $pValue;
 
         return $this;
     }
@@ -1611,7 +1613,7 @@ class Html extends BaseWriter
     /**
      * Set use embedded CSS?
      *
-     * @param bool $useEmbeddedCSS
+     * @param bool $pValue
      *
      * @return $this
      *
@@ -1619,9 +1621,9 @@ class Html extends BaseWriter
      *
      * @deprecated no longer used
      */
-    public function setUseEmbeddedCSS($useEmbeddedCSS)
+    public function setUseEmbeddedCSS($pValue)
     {
-        $this->useEmbeddedCSS = $useEmbeddedCSS;
+        $this->useEmbeddedCSS = $pValue;
 
         return $this;
     }
@@ -1629,32 +1631,32 @@ class Html extends BaseWriter
     /**
      * Add color to formatted string as inline style.
      *
-     * @param string $value Plain formatted value without color
-     * @param string $format Format code
+     * @param string $pValue Plain formatted value without color
+     * @param string $pFormat Format code
      *
      * @return string
      */
-    public function formatColor($value, $format)
+    public function formatColor($pValue, $pFormat)
     {
         // Color information, e.g. [Red] is always at the beginning
         $color = null; // initialize
         $matches = [];
 
         $color_regex = '/^\\[[a-zA-Z]+\\]/';
-        if (preg_match($color_regex, $format, $matches)) {
+        if (preg_match($color_regex, $pFormat, $matches)) {
             $color = str_replace(['[', ']'], '', $matches[0]);
             $color = strtolower($color);
         }
 
         // convert to PCDATA
-        $result = htmlspecialchars($value, Settings::htmlEntityFlags());
+        $value = htmlspecialchars($pValue, Settings::htmlEntityFlags());
 
         // color span tag
         if ($color !== null) {
-            $result = '<span style="color:' . $color . '">' . $result . '</span>';
+            $value = '<span style="color:' . $color . '">' . $value . '</span>';
         }
 
-        return $result;
+        return $value;
     }
 
     /**
@@ -1769,10 +1771,6 @@ class Html extends BaseWriter
         $result = '';
         if (!$this->isPdf && isset($worksheet->getComments()[$coordinate])) {
             $sanitizer = new HTMLPurifier();
-            $cachePath = File::sysGetTempDir() . '/phpsppur';
-            if (is_dir($cachePath) || mkdir($cachePath)) {
-                $sanitizer->config->set('Cache.SerializerPath', $cachePath);
-            }
             $sanitizedString = $sanitizer->purify($worksheet->getComment($coordinate)->getText()->getPlainText());
             if ($sanitizedString !== '') {
                 $result .= '<a class="comment-indicator"></a>';

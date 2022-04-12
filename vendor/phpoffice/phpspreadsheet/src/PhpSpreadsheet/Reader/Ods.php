@@ -47,7 +47,7 @@ class Ods extends BaseReader
 
         // Load file
 
-        if (File::testFileNoThrow($filename, '')) {
+        if (File::testFileNoThrow($filename)) {
             $zip = new ZipArchive();
             if ($zip->open($filename) === true) {
                 // check if it is an OOXML archive
@@ -84,19 +84,19 @@ class Ods extends BaseReader
     /**
      * Reads names of the worksheets from a file, without parsing the whole file to a PhpSpreadsheet object.
      *
-     * @param string $filename
+     * @param string $pFilename
      *
      * @return string[]
      */
-    public function listWorksheetNames($filename)
+    public function listWorksheetNames($pFilename)
     {
-        File::assertFile($filename, self::INITIAL_FILE);
+        File::assertFile($pFilename, self::INITIAL_FILE);
 
         $worksheetNames = [];
 
         $xml = new XMLReader();
         $xml->xml(
-            $this->securityScanner->scanFile('zip://' . realpath($filename) . '#' . self::INITIAL_FILE),
+            $this->securityScanner->scanFile('zip://' . realpath($pFilename) . '#' . self::INITIAL_FILE),
             null,
             Settings::getLibXmlLoaderOptions()
         );
@@ -131,19 +131,19 @@ class Ods extends BaseReader
     /**
      * Return worksheet info (Name, Last Column Letter, Last Column Index, Total Rows, Total Columns).
      *
-     * @param string $filename
+     * @param string $pFilename
      *
      * @return array
      */
-    public function listWorksheetInfo($filename)
+    public function listWorksheetInfo($pFilename)
     {
-        File::assertFile($filename, self::INITIAL_FILE);
+        File::assertFile($pFilename, self::INITIAL_FILE);
 
         $worksheetInfo = [];
 
         $xml = new XMLReader();
         $xml->xml(
-            $this->securityScanner->scanFile('zip://' . realpath($filename) . '#' . self::INITIAL_FILE),
+            $this->securityScanner->scanFile('zip://' . realpath($pFilename) . '#' . self::INITIAL_FILE),
             null,
             Settings::getLibXmlLoaderOptions()
         );
@@ -234,16 +234,16 @@ class Ods extends BaseReader
     /**
      * Loads PhpSpreadsheet from file into PhpSpreadsheet instance.
      *
-     * @param string $filename
+     * @param string $pFilename
      *
      * @return Spreadsheet
      */
-    public function loadIntoExisting($filename, Spreadsheet $spreadsheet)
+    public function loadIntoExisting($pFilename, Spreadsheet $spreadsheet)
     {
-        File::assertFile($filename, self::INITIAL_FILE);
+        File::assertFile($pFilename, self::INITIAL_FILE);
 
         $zip = new ZipArchive();
-        $zip->open($filename);
+        $zip->open($pFilename);
 
         // Meta
 

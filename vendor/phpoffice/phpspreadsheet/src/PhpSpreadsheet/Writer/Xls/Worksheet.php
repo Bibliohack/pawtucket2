@@ -188,7 +188,7 @@ class Worksheet extends BIFFwriter
     /**
      * Escher object corresponding to MSODRAWING.
      *
-     * @var null|\PhpOffice\PhpSpreadsheet\Shared\Escher
+     * @var \PhpOffice\PhpSpreadsheet\Shared\Escher
      */
     private $escher;
 
@@ -2507,18 +2507,22 @@ class Worksheet extends BIFFwriter
 
     /**
      * Get Escher object.
+     *
+     * @return \PhpOffice\PhpSpreadsheet\Shared\Escher
      */
-    public function getEscher(): ?\PhpOffice\PhpSpreadsheet\Shared\Escher
+    public function getEscher()
     {
         return $this->escher;
     }
 
     /**
      * Set Escher object.
+     *
+     * @param \PhpOffice\PhpSpreadsheet\Shared\Escher $pValue
      */
-    public function setEscher(?\PhpOffice\PhpSpreadsheet\Shared\Escher $escher): void
+    public function setEscher(?\PhpOffice\PhpSpreadsheet\Shared\Escher $pValue = null): void
     {
-        $this->escher = $escher;
+        $this->escher = $pValue;
     }
 
     /**

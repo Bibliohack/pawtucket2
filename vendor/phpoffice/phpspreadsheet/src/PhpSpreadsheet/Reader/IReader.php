@@ -30,11 +30,11 @@ interface IReader
      *        Set to true, to advise the Reader only to read data values for cells, and to ignore any formatting information.
      *        Set to false (the default) to advise the Reader to read both data and formatting for cells.
      *
-     * @param bool $readDataOnly
+     * @param bool $pValue
      *
      * @return IReader
      */
-    public function setReadDataOnly($readDataOnly);
+    public function setReadDataOnly($pValue);
 
     /**
      * Read empty cells?
@@ -50,11 +50,11 @@ interface IReader
      *        Set to true (the default) to advise the Reader read data values for all cells, irrespective of value.
      *        Set to false to advise the Reader to ignore cells containing a null value or an empty string.
      *
-     * @param bool $readEmptyCells
+     * @param bool $pValue
      *
      * @return IReader
      */
-    public function setReadEmptyCells($readEmptyCells);
+    public function setReadEmptyCells($pValue);
 
     /**
      * Read charts in workbook?
@@ -72,11 +72,11 @@ interface IReader
      *      Note that a ReadDataOnly value of false overrides, and charts won't be read regardless of the IncludeCharts value.
      *        Set to false (the default) to discard charts.
      *
-     * @param bool $includeCharts
+     * @param bool $pValue
      *
      * @return IReader
      */
-    public function setIncludeCharts($includeCharts);
+    public function setIncludeCharts($pValue);
 
     /**
      * Get which sheets to load
@@ -118,7 +118,7 @@ interface IReader
      *
      * @return IReader
      */
-    public function setReadFilter(IReadFilter $readFilter);
+    public function setReadFilter(IReadFilter $pValue);
 
     /**
      * Loads PhpSpreadsheet from file.

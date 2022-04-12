@@ -66,13 +66,13 @@ class DefinedNames
     /**
      * Write Defined Name for named range.
      */
-    private function writeDefinedName(DefinedName $definedName): void
+    private function writeDefinedName(DefinedName $pDefinedName): void
     {
         // definedName for named range
         $local = -1;
-        if ($definedName->getLocalOnly() && $definedName->getScope() !== null) {
+        if ($pDefinedName->getLocalOnly() && $pDefinedName->getScope() !== null) {
             try {
-                $local = $definedName->getScope()->getParent()->getIndex($definedName->getScope());
+                $local = $pDefinedName->getScope()->getParent()->getIndex($pDefinedName->getScope());
             } catch (Exception $e) {
                 // See issue 2266 - deleting sheet which contains
                 //     defined names will cause Exception above.
@@ -80,7 +80,7 @@ class DefinedNames
             }
         }
         $this->objWriter->startElement('definedName');
-        $this->objWriter->writeAttribute('name', $definedName->getName());
+        $this->objWriter->writeAttribute('name', $pDefinedName->getName());
         if ($local >= 0) {
             $this->objWriter->writeAttribute(
                 'localSheetId',
@@ -88,7 +88,7 @@ class DefinedNames
             );
         }
 
-        $definedRange = $this->getDefinedRange($definedName);
+        $definedRange = $this->getDefinedRange($pDefinedName);
 
         $this->objWriter->writeRawData($definedRange);
 
@@ -189,9 +189,9 @@ class DefinedNames
         }
     }
 
-    private function getDefinedRange(DefinedName $definedName): string
+    private function getDefinedRange(DefinedName $pDefinedName): string
     {
-        $definedRange = $definedName->getValue();
+        $definedRange = $pDefinedName->getValue();
         $splitCount = preg_match_all(
             '/' . Calculation::CALCULATION_REGEXP_CELLREF_RELATIVE . '/mui',
             $definedRange,
@@ -218,7 +218,7 @@ class DefinedNames
             if (empty($worksheet)) {
                 if (($offset === 0) || ($definedRange[$offset - 1] !== ':')) {
                     // We should have a worksheet
-                    $ws = $definedName->getWorksheet();
+                    $ws = $pDefinedName->getWorksheet();
                     $worksheet = ($ws === null) ? null : $ws->getTitle();
                 }
             } else {

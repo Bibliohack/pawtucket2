@@ -67,15 +67,15 @@ class Drawing
      * Convert column width from (intrinsic) Excel units to pixels.
      *
      * @param float $cellWidth Value in cell dimension
-     * @param \PhpOffice\PhpSpreadsheet\Style\Font $defaultFont Default font of the workbook
+     * @param \PhpOffice\PhpSpreadsheet\Style\Font $pDefaultFont Default font of the workbook
      *
      * @return int Value in pixels
      */
-    public static function cellDimensionToPixels($cellWidth, \PhpOffice\PhpSpreadsheet\Style\Font $defaultFont)
+    public static function cellDimensionToPixels($cellWidth, \PhpOffice\PhpSpreadsheet\Style\Font $pDefaultFont)
     {
         // Font name and size
-        $name = $defaultFont->getName();
-        $size = $defaultFont->getSize();
+        $name = $pDefaultFont->getName();
+        $size = $pDefaultFont->getSize();
 
         if (isset(Font::$defaultColumnWidths[$name][$size])) {
             // Exact width can be determined

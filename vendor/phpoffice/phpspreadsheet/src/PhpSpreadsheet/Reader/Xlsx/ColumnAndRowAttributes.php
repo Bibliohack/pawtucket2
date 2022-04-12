@@ -72,7 +72,11 @@ class ColumnAndRowAttributes extends BaseParserClass
         }
     }
 
-    public function load(?IReadFilter $readFilter = null, bool $readDataOnly = false): void
+    /**
+     * @param IReadFilter $readFilter
+     * @param bool $readDataOnly
+     */
+    public function load(?IReadFilter $readFilter = null, $readDataOnly = false): void
     {
         if ($this->worksheetXml === null) {
             return;

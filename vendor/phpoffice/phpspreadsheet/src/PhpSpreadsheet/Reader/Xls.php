@@ -451,18 +451,18 @@ class Xls extends BaseReader
     /**
      * Reads names of the worksheets from a file, without parsing the whole file to a PhpSpreadsheet object.
      *
-     * @param string $filename
+     * @param string $pFilename
      *
      * @return array
      */
-    public function listWorksheetNames($filename)
+    public function listWorksheetNames($pFilename)
     {
-        File::assertFile($filename);
+        File::assertFile($pFilename);
 
         $worksheetNames = [];
 
         // Read the OLE file
-        $this->loadOLE($filename);
+        $this->loadOLE($pFilename);
 
         // total byte size of Excel data (workbook global substream + sheet substreams)
         $this->dataSize = strlen($this->data);
@@ -509,18 +509,18 @@ class Xls extends BaseReader
     /**
      * Return worksheet info (Name, Last Column Letter, Last Column Index, Total Rows, Total Columns).
      *
-     * @param string $filename
+     * @param string $pFilename
      *
      * @return array
      */
-    public function listWorksheetInfo($filename)
+    public function listWorksheetInfo($pFilename)
     {
-        File::assertFile($filename);
+        File::assertFile($pFilename);
 
         $worksheetInfo = [];
 
         // Read the OLE file
-        $this->loadOLE($filename);
+        $this->loadOLE($pFilename);
 
         // total byte size of Excel data (workbook global substream + sheet substreams)
         $this->dataSize = strlen($this->data);
@@ -1364,14 +1364,14 @@ class Xls extends BaseReader
     /**
      * Use OLE reader to extract the relevant data streams from the OLE file.
      *
-     * @param string $filename
+     * @param string $pFilename
      */
-    private function loadOLE($filename): void
+    private function loadOLE($pFilename): void
     {
         // OLE reader
         $ole = new OLERead();
         // get excel data,
-        $ole->read($filename);
+        $ole->read($pFilename);
         // Get workbook data: workbook stream + sheet streams
         $this->data = $ole->getStream($ole->wrkbook);
         // Get summary information data
@@ -7017,7 +7017,7 @@ class Xls extends BaseReader
                 // offset: 3; size: 2; one-based index to DEFINEDNAME or EXTERNNAME record
                 $index = self::getUInt2d($formulaData, 3);
                 // assume index is to EXTERNNAME record
-                $data = $this->externalNames[$index - 1]['name'] ?? '';
+                $data = $this->externalNames[$index - 1]['name'];
                 // offset: 5; size: 2; not used
                 break;
             case 0x3A:    //    3d reference to cell

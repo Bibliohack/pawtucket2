@@ -15,13 +15,12 @@ class Functions
      */
     const M_2DIVPI = 0.63661977236758134307553505349006;
 
+    /** constants */
     const COMPATIBILITY_EXCEL = 'Excel';
     const COMPATIBILITY_GNUMERIC = 'Gnumeric';
     const COMPATIBILITY_OPENOFFICE = 'OpenOfficeCalc';
 
-    /** Use of RETURNDATE_PHP_NUMERIC is discouraged - not 32-bit Y2038-safe, no timezone. */
     const RETURNDATE_PHP_NUMERIC = 'P';
-    /** Use of RETURNDATE_UNIX_TIMESTAMP is discouraged - not 32-bit Y2038-safe, no timezone. */
     const RETURNDATE_UNIX_TIMESTAMP = 'P';
     const RETURNDATE_PHP_OBJECT = 'O';
     const RETURNDATE_PHP_DATETIME_OBJECT = 'O';
@@ -661,16 +660,16 @@ class Functions
      * ISFORMULA.
      *
      * @param mixed $cellReference The cell to check
-     * @param ?Cell $cell The current cell (containing this formula)
+     * @param ?Cell $pCell The current cell (containing this formula)
      *
      * @return bool|string
      */
-    public static function isFormula($cellReference = '', ?Cell $cell = null)
+    public static function isFormula($cellReference = '', ?Cell $pCell = null)
     {
-        if ($cell === null) {
+        if ($pCell === null) {
             return self::REF();
         }
-        $cellReference = self::expandDefinedName((string) $cellReference, $cell);
+        $cellReference = self::expandDefinedName((string) $cellReference, $pCell);
         $cellReference = self::trimTrailingRange($cellReference);
 
         preg_match('/^' . Calculation::CALCULATION_REGEXP_CELLREF . '$/i', $cellReference, $matches);
@@ -679,33 +678,33 @@ class Functions
         $worksheetName = str_replace("''", "'", trim($matches[2], "'"));
 
         $worksheet = (!empty($worksheetName))
-            ? $cell->getWorksheet()->getParent()->getSheetByName($worksheetName)
-            : $cell->getWorksheet();
+            ? $pCell->getWorksheet()->getParent()->getSheetByName($worksheetName)
+            : $pCell->getWorksheet();
 
         return $worksheet->getCell($cellReference)->isFormula();
     }
 
-    public static function expandDefinedName(string $coordinate, Cell $cell): string
+    public static function expandDefinedName(string $pCoordinate, Cell $pCell): string
     {
-        $worksheet = $cell->getWorksheet();
+        $worksheet = $pCell->getWorksheet();
         $spreadsheet = $worksheet->getParent();
         // Uppercase coordinate
-        $pCoordinatex = strtoupper($coordinate);
+        $pCoordinatex = strtoupper($pCoordinate);
         // Eliminate leading equal sign
         $pCoordinatex = Worksheet::pregReplace('/^=/', '', $pCoordinatex);
         $defined = $spreadsheet->getDefinedName($pCoordinatex, $worksheet);
         if ($defined !== null) {
             $worksheet2 = $defined->getWorkSheet();
             if (!$defined->isFormula() && $worksheet2 !== null) {
-                $coordinate = "'" . $worksheet2->getTitle() . "'!" . Worksheet::pregReplace('/^=/', '', $defined->getValue());
+                $pCoordinate = "'" . $worksheet2->getTitle() . "'!" . Worksheet::pregReplace('/^=/', '', $defined->getValue());
             }
         }
 
-        return $coordinate;
+        return $pCoordinate;
     }
 
-    public static function trimTrailingRange(string $coordinate): string
+    public static function trimTrailingRange(string $pCoordinate): string
     {
-        return Worksheet::pregReplace('/:[\\w\$]+$/', '', $coordinate);
+        return Worksheet::pregReplace('/:[\\w\$]+$/', '', $pCoordinate);
     }
 }

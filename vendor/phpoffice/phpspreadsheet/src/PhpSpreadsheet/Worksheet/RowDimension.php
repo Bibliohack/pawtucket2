@@ -32,12 +32,12 @@ class RowDimension extends Dimension
     /**
      * Create a new RowDimension.
      *
-     * @param int $index Numeric row index
+     * @param int $pIndex Numeric row index
      */
-    public function __construct($index = 0)
+    public function __construct($pIndex = 0)
     {
         // Initialise values
-        $this->rowIndex = $index;
+        $this->rowIndex = $pIndex;
 
         // set dimension as unformatted by default
         parent::__construct(null);
@@ -108,9 +108,9 @@ class RowDimension extends Dimension
      *
      * @return $this
      */
-    public function setZeroHeight(bool $zeroHeight)
+    public function setZeroHeight(bool $pValue)
     {
-        $this->zeroHeight = $zeroHeight;
+        $this->zeroHeight = $pValue;
 
         return $this;
     }

@@ -76,7 +76,7 @@ class Cells
     /**
      * Return the parent worksheet for this cell collection.
      *
-     * @return null|Worksheet
+     * @return Worksheet
      */
     public function getParent()
     {
@@ -181,7 +181,7 @@ class Cells
 
         // Determine highest column and row
         $highestRow = max($row);
-        $highestColumn = substr((string) @max($col), 1);
+        $highestColumn = substr(max($col), 1);
 
         return [
             'row' => $highestRow,
@@ -192,7 +192,7 @@ class Cells
     /**
      * Return the cell coordinate of the currently active cell object.
      *
-     * @return null|string
+     * @return string
      */
     public function getCurrentCoordinate()
     {
@@ -209,7 +209,7 @@ class Cells
         $column = '';
         $row = 0;
 
-        sscanf($this->currentCoordinate ?? '', '%[A-Z]%d', $column, $row);
+        sscanf($this->currentCoordinate, '%[A-Z]%d', $column, $row);
 
         return $column;
     }
@@ -224,7 +224,7 @@ class Cells
         $column = '';
         $row = 0;
 
-        sscanf($this->currentCoordinate ?? '', '%[A-Z]%d', $column, $row);
+        sscanf($this->currentCoordinate, '%[A-Z]%d', $column, $row);
 
         return (int) $row;
     }
@@ -232,7 +232,7 @@ class Cells
     /**
      * Get highest worksheet column.
      *
-     * @param null|int|string $row Return the highest column for the specified row,
+     * @param string $row Return the highest column for the specified row,
      *                    or the highest column of any row if no row number is passed
      *
      * @return string Highest column name
@@ -257,13 +257,13 @@ class Cells
             $columnList[] = Coordinate::columnIndexFromString($c);
         }
 
-        return Coordinate::stringFromColumnIndex((int) @max($columnList));
+        return Coordinate::stringFromColumnIndex(max($columnList));
     }
 
     /**
      * Get highest worksheet row.
      *
-     * @param null|string $column Return the highest row for the specified column,
+     * @param string $column Return the highest row for the specified column,
      *                       or the highest row of any column if no column letter is passed
      *
      * @return int Highest row number
@@ -304,6 +304,8 @@ class Cells
     /**
      * Clone the cell collection.
      *
+     * @param Worksheet $worksheet The new worksheet that we're copying to
+     *
      * @return self
      */
     public function cloneCellCollection(Worksheet $worksheet)
@@ -312,7 +314,7 @@ class Cells
         $newCollection = clone $this;
 
         $newCollection->parent = $worksheet;
-        if (is_object($newCollection->currentCell)) {
+        if (($newCollection->currentCell !== null) && (is_object($newCollection->currentCell))) {
             $newCollection->currentCell->attach($this);
         }
 
@@ -325,14 +327,16 @@ class Cells
         // Change prefix
         $newCollection->cachePrefix = $newCollection->getUniqueID();
         foreach ($oldValues as $oldKey => $value) {
-            /** @var string $newKey */
-            $newKey = str_replace($oldCachePrefix, $newCollection->cachePrefix, $oldKey);
-            $newValues[$newKey] = clone $value;
+            $newValues[str_replace($oldCachePrefix, $newCollection->cachePrefix, $oldKey)] = clone $value;
         }
 
         // Store new values
         $stored = $newCollection->cache->setMultiple($newValues);
-        $this->destructIfNeeded($stored, $newCollection, 'Failed to copy cells in cache');
+        if (!$stored) {
+            $newCollection->__destruct();
+
+            throw new PhpSpreadsheetException('Failed to copy cells in cache');
+        }
 
         return $newCollection;
     }
@@ -379,25 +383,20 @@ class Cells
      */
     private function storeCurrentCell(): void
     {
-        if ($this->currentCellIsDirty && isset($this->currentCoordinate, $this->currentCell)) {
+        if ($this->currentCellIsDirty && !empty($this->currentCoordinate)) {
             $this->currentCell->detach();
 
             $stored = $this->cache->set($this->cachePrefix . $this->currentCoordinate, $this->currentCell);
-            $this->destructIfNeeded($stored, $this, "Failed to store cell {$this->currentCoordinate} in cache");
+            if (!$stored) {
+                $this->__destruct();
+
+                throw new PhpSpreadsheetException("Failed to store cell {$this->currentCoordinate} in cache");
+            }
             $this->currentCellIsDirty = false;
         }
 
         $this->currentCoordinate = null;
         $this->currentCell = null;
-    }
-
-    private function destructIfNeeded(bool $stored, self $cells, string $message): void
-    {
-        if (!$stored) {
-            $cells->__destruct();
-
-            throw new PhpSpreadsheetException($message);
-        }
     }
 
     /**

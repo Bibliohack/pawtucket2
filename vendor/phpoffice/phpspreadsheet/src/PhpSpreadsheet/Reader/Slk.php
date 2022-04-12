@@ -89,12 +89,12 @@ class Slk extends BaseReader
         return $hasDelimiter && $hasId;
     }
 
-    private function canReadOrBust(string $filename): void
+    private function canReadOrBust(string $pFilename): void
     {
-        if (!$this->canRead($filename)) {
-            throw new ReaderException($filename . ' is an Invalid SYLK file.');
+        if (!$this->canRead($pFilename)) {
+            throw new ReaderException($pFilename . ' is an Invalid SYLK file.');
         }
-        $this->openFile($filename);
+        $this->openFile($pFilename);
     }
 
     /**
@@ -102,15 +102,15 @@ class Slk extends BaseReader
      *
      * @deprecated no use is made of this property
      *
-     * @param string $inputEncoding Input encoding, eg: 'ANSI'
+     * @param string $pValue Input encoding, eg: 'ANSI'
      *
      * @return $this
      *
      * @codeCoverageIgnore
      */
-    public function setInputEncoding($inputEncoding)
+    public function setInputEncoding($pValue)
     {
-        $this->inputEncoding = $inputEncoding;
+        $this->inputEncoding = $pValue;
 
         return $this;
     }
@@ -132,19 +132,19 @@ class Slk extends BaseReader
     /**
      * Return worksheet info (Name, Last Column Letter, Last Column Index, Total Rows, Total Columns).
      *
-     * @param string $filename
+     * @param string $pFilename
      *
      * @return array
      */
-    public function listWorksheetInfo($filename)
+    public function listWorksheetInfo($pFilename)
     {
         // Open file
-        $this->canReadOrBust($filename);
+        $this->canReadOrBust($pFilename);
         $fileHandle = $this->fileHandle;
         rewind($fileHandle);
 
         $worksheetInfo = [];
-        $worksheetInfo[0]['worksheetName'] = basename($filename, '.slk');
+        $worksheetInfo[0]['worksheetName'] = basename($pFilename, '.slk');
 
         // loop through one row (line) at a time in the file
         $rowIndex = 0;
@@ -506,14 +506,14 @@ class Slk extends BaseReader
     /**
      * Loads PhpSpreadsheet from file into PhpSpreadsheet instance.
      *
-     * @param string $filename
+     * @param string $pFilename
      *
      * @return Spreadsheet
      */
-    public function loadIntoExisting($filename, Spreadsheet $spreadsheet)
+    public function loadIntoExisting($pFilename, Spreadsheet $spreadsheet)
     {
         // Open file
-        $this->canReadOrBust($filename);
+        $this->canReadOrBust($pFilename);
         $fileHandle = $this->fileHandle;
         rewind($fileHandle);
 
@@ -522,7 +522,7 @@ class Slk extends BaseReader
             $spreadsheet->createSheet();
         }
         $spreadsheet->setActiveSheetIndex($this->sheetIndex);
-        $spreadsheet->getActiveSheet()->setTitle(substr(basename($filename, '.slk'), 0, Worksheet::SHEET_TITLE_MAXIMUM_LENGTH));
+        $spreadsheet->getActiveSheet()->setTitle(substr(basename($pFilename, '.slk'), 0, Worksheet::SHEET_TITLE_MAXIMUM_LENGTH));
 
         // Loop through file
         $column = $row = '';
@@ -583,13 +583,13 @@ class Slk extends BaseReader
     /**
      * Set sheet index.
      *
-     * @param int $sheetIndex Sheet index
+     * @param int $pValue Sheet index
      *
      * @return $this
      */
-    public function setSheetIndex($sheetIndex)
+    public function setSheetIndex($pValue)
     {
-        $this->sheetIndex = $sheetIndex;
+        $this->sheetIndex = $pValue;
 
         return $this;
     }

@@ -1,7 +1,3 @@
-#To begin configuring your theme, you will to copy some configuration files from the default theme, including, but not
-#limited to:
-
-#detail.conf
-#search.conf
-#browse.conf
+# Configuración del tema base de Bibliohack
+# Aquí se encuentran los archivos de configuración
 

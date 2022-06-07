@@ -1,0 +1,7 @@
+body {
+    font-family: MuseoModerno, Roboto, sans-serif;
+}
+
+.navbar-default .navbar-nav > li > a {
+    color: var(--rosa);
+}

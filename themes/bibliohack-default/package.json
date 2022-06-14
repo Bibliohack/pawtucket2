@@ -1,0 +1,29 @@
+{
+  "name": "bibliohack-default",
+  "version": "1.0.0",
+  "description": "Tema de Pawtucket de Bibliohack",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "webpack-dev-server --mode=development",
+    "build": "webpack --mode=production",
+    "dev": "npm run development",
+    "development": "webpack --mode=development",
+    "watch": "webpack --watch --progress"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "html-webpack-plugin": "^5.4.0",
+    "sass": "^1.52.2"
+  },
+  "devDependencies": {
+    "css-loader": "^6.7.1",
+    "file-loader": "^6.2.0",
+    "sass-loader": "^13.0.0",
+    "style-loader": "^3.3.1",
+    "webpack": "^5.59.1",
+    "webpack-cli": "^4.9.1"
+  }
+}

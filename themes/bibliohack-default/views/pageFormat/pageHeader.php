@@ -59,6 +59,9 @@
 
 	<title><?php print (MetaTagManager::getWindowTitle()) ? MetaTagManager::getWindowTitle() : $this->request->config->get("app_display_name"); ?></title>
 	
+	<!-- @theme el siguiente script es para que levante webpack (y todos los archivos de estilos de sass) -->
+	<script src="<?php print $this->request->getThemeUrlPath(); ?>/assets/js/app.js"></script>
+
 	<script type="text/javascript">
 		jQuery(document).ready(function() {
     		jQuery('#browse-menu').on('click mouseover mouseout mousemove mouseenter',function(e) { e.stopPropagation(); });

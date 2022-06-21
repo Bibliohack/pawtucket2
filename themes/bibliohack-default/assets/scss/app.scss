@@ -1,9 +1,15 @@
 /* @import "../node_modules/bootstrap/scss/bootstrap"; */
 @import "original_styles";
+@import "fonts";
 @import "home";
+@import "details_object";
 
 $rojo: #ff0000;
 $verde: #00ff00;
+
+body {
+    font-family: 'MuseoModerno', Roboto, sans-serif;
+}
 
 .navbar-default {
     .navbar-nav {

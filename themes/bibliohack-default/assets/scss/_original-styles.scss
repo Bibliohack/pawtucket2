@@ -26,58 +26,58 @@ body {
 	width: auto;
 	height: auto;
 }
-b, strong{
-	font-family: Lato;
-}
-a, a:hover {
-	color:#11808D;
-}
-a, a:active, a:focus {
-   outline: 0;
-   text-decoration:none;
-}
+// b, strong{
+// 	font-family: Lato;
+// }
+// a, a:hover {
+// 	color:#11808D;
+// }
+// a, a:active, a:focus {
+//    outline: 0;
+//    text-decoration:none;
+// }
 
-H1, h1, H2, h2, H3, h3, H4, h4, H5, h5, H6, h6{
-	font-family: lato;
-	font-weight: normal;
-	font-style: normal;
-}
-H1, h1{
-	font-size: 20px;
-	color:#000000;
-	text-transform:uppercase;
-	margin-top:0px;
-}
-H1 .btn-group{
-	text-transform:none;
-}
-H2, h2{
-	font-size: 18px;
-	color:#000000;
-}
-H3, h3{
-	font-size: 16px;
-	text-transform:uppercase;
-	color:#000000;
-}
-H4, h4{
-	font-size: 18px;
-	color:#262626;
-	line-height:135%;
-	text-transform:none;
-}
-H5, h5{
-	font-size: 14px;
-	color:#757575;
-	text-transform:none;
-}
-H6, h6{
-	font-size: 12px;
-	color:#454545;
-	text-transform:uppercase;
-	padding-bottom:0px;
-	margin:10px 0px 5px 0px;
-}
+// H1, h1, H2, h2, H3, h3, H4, h4, H5, h5, H6, h6{
+// 	font-family: lato;
+// 	font-weight: normal;
+// 	font-style: normal;
+// }
+// H1, h1{
+// 	font-size: 20px;
+// 	color:#000000;
+// 	text-transform:uppercase;
+// 	margin-top:0px;
+// }
+// H1 .btn-group{
+// 	text-transform:none;
+// }
+// H2, h2{
+// 	font-size: 18px;
+// 	color:#000000;
+// }
+// H3, h3{
+// 	font-size: 16px;
+// 	text-transform:uppercase;
+// 	color:#000000;
+// }
+// H4, h4{
+// 	font-size: 18px;
+// 	color:#262626;
+// 	line-height:135%;
+// 	text-transform:none;
+// }
+// H5, h5{
+// 	font-size: 14px;
+// 	color:#757575;
+// 	text-transform:none;
+// }
+// H6, h6{
+// 	font-size: 12px;
+// 	color:#454545;
+// 	text-transform:uppercase;
+// 	padding-bottom:0px;
+// 	margin:10px 0px 5px 0px;
+// }
 .caption {
 	font-size:11px; 
 	color:#757575;
@@ -214,15 +214,15 @@ h1 i {
 		display:none !important;
 	}
 }
-.navbar {
-  border-radius:0px;
-  background-image:none;
-  background-color:#FFFFFF;
-  border-top:0px;
-  border:0px;
-  -webkit-box-shadow:0 1px 3px rgba(0, 0, 0, 0.3);
-  box-shadow:0 1px 3px rgba(0, 0, 0, 0.3);
-}
+// .navbar {
+//   border-radius:0px;
+//   background-image:none;
+//   background-color:#FFFFFF;
+//   border-top:0px;
+//   border:0px;
+//   -webkit-box-shadow:0 1px 3px rgba(0, 0, 0, 0.3);
+//   box-shadow:0 1px 3px rgba(0, 0, 0, 0.3);
+// }
 .navbar-collapse{
 	-webkit-box-shadow: none;
 	box-shadow: none;
@@ -362,14 +362,14 @@ h1 i {
 	}
 }
 @media (max-width: 1010px) {
-	ul.menuItems {
-		width:100%;
-		border-top:solid 1px #ddd;
-	}
-	.menuItems.navbar-nav > li > a {
-		padding-top:5px;
-		padding-bottom:5px;
-	}
+	// ul.menuItems {
+	// 	width:100%;
+	// 	border-top:solid 1px #ddd;
+	// }
+	// .menuItems.navbar-nav > li > a {
+	// 	padding-top:5px;
+	// 	padding-bottom:5px;
+	// }
 	.navbar-collapse .navbar-nav.navbar-right:last-child {
 		margin-right:0px;
 	}
@@ -1519,94 +1519,94 @@ a.browseRemoveFacet img {
 /* --------------------------------- */
 /* details */
 /* --------------------------------- */
-.detail HR{
-	color:#ededed;
-	padding:0px;
-	margin:10px 0px 10px 0px;
-}
-.detail {
-	color:#454545;
-	font-size:12px;
-}
-.detail a {
-	color:#757575;
-	text-decoration:none;
-}
+// .detail HR{
+// 	color:#ededed;
+// 	padding:0px;
+// 	margin:10px 0px 10px 0px;
+// }
+// .detail {
+// 	color:#454545;
+// 	font-size:12px;
+// }
+// .detail a {
+// 	color:#757575;
+// 	text-decoration:none;
+// }
 
-.detail a:hover{
-	color:#737373;
-	text-decoration:underline;
-}
+// .detail a:hover{
+// 	color:#737373;
+// 	text-decoration:underline;
+// }
 	
-.detail H4 {
-	padding:0px;
-	margin:0px;
-}
-.detail H6 a{
-	color:#11808D;
-	/*font-size:9px;*/
-	padding:2px 0px 0px 10px;
-	text-decoration:none;
-}
-.detail h1{
-	font-size: 18px;
-	color: #262626;
-	line-height: 135%;
-	text-transform: none;
-}
-.detail h2{
-	font-size: 14px;
-	color:#454545;
-	text-transform:uppercase;
-	padding-bottom:0px;
-	margin:10px 0px 5px 0px;
-}
-.detail label{
-	display:block;
-	font-size: 12px;
-	color:#454545;
-	text-transform:uppercase;
-	padding-bottom:0px;
-	margin:10px 0px 5px 0px;
-}
-.detail .detailNavBgLeft, .detail .detailNavBgRight{
-	margin-top:-20px;
-	background-color:#EBEBEB;
-	width:45px;
-	height:120px;
-	text-transform:uppercase;
-	padding-top:20px;
-	padding-bottom:20px;
-	text-align:center;
-}
+// .detail H4 {
+// 	padding:0px;
+// 	margin:0px;
+// }
+// .detail H6 a{
+// 	color:#11808D;
+// 	/*font-size:9px;*/
+// 	padding:2px 0px 0px 10px;
+// 	text-decoration:none;
+// }
+// .detail h1{
+// 	font-size: 18px;
+// 	color: #262626;
+// 	line-height: 135%;
+// 	text-transform: none;
+// }
+// .detail h2{
+// 	font-size: 14px;
+// 	color:#454545;
+// 	text-transform:uppercase;
+// 	padding-bottom:0px;
+// 	margin:10px 0px 5px 0px;
+// }
+// .detail label{
+// 	display:block;
+// 	font-size: 12px;
+// 	color:#454545;
+// 	text-transform:uppercase;
+// 	padding-bottom:0px;
+// 	margin:10px 0px 5px 0px;
+// }
+// .detail .detailNavBgLeft, .detail .detailNavBgRight{
+// 	margin-top:-20px;
+// 	background-color:#EBEBEB;
+// 	width:45px;
+// 	height:120px;
+// 	text-transform:uppercase;
+// 	padding-top:20px;
+// 	padding-bottom:20px;
+// 	text-align:center;
+// }
 
-.detail .detailNavBgLeft{
-	position:absolute;
-	left:0;
-}
-.detail .detailNavBgRight{
-	position:absolute;
-	right:0;
-}
-.detail .detailNavBgLeft a, .detail .detailNavBgRight a{
-	/*color:#8e8985;*/
-	color:#696969;
-	line-height:.3em;
-	font-size:18px;
-	text-decoration:none;
-}
-.detail .detailNavBgLeft a .small, .detail .detailNavBgRight a .small{
-	font-size:8px;
-	/*color:#ababab;*/
-	color:#696969;
-	padding-bottom:20px;
-	padding-top:3px;
-}
-@media (max-width: 767px) {
-	.detail .navLeftRight{
-		display:none;
-	}
-}
+// .detail .detailNavBgLeft{
+// 	position:absolute;
+// 	left:0;
+// }
+// .detail .detailNavBgRight{
+// 	position:absolute;
+// 	right:0;
+// }
+// .detail .detailNavBgLeft a, .detail .detailNavBgRight a{
+// 	/*color:#8e8985;*/
+// 	color:#696969;
+// 	line-height:.3em;
+// 	font-size:18px;
+// 	text-decoration:none;
+// }
+// .detail .detailNavBgLeft a .small, .detail .detailNavBgRight a .small{
+// 	font-size:8px;
+// 	/*color:#ababab;*/
+// 	color:#696969;
+// 	padding-bottom:20px;
+// 	padding-top:3px;
+// }
+// @media (max-width: 767px) {
+// 	.detail .navLeftRight{
+// 		display:none;
+// 	}
+// }
 @media (min-width: 768px) {
 	.detail .navTop{
 		display:none;

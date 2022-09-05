@@ -79,58 +79,36 @@
 ?>
 </head>
 <body>
-	<nav class="navbar navbar-default yamm" role="navigation">
+	<nav class="navbar yamm" role="navigation">
 		<div class="container menuBar">
 			<!-- Brand and toggle get grouped for better mobile display -->
-			<div class="navbar-header">
-<?php
-	if ($vb_has_user_links) {
-?>
-				<button type="button" class="navbar-toggle navbar-toggle-user" data-toggle="collapse" data-target="#user-navbar-toggle">
-					<span class="sr-only">User Options</span>
-					<span class="glyphicon glyphicon-user"></span>
-				</button>
-<?php
-	}
-?>
+			<div class="navbar-logo-container">
 				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-main-navbar-collapse-1">
 					<span class="sr-only">Toggle navigation</span>
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 				</button>
-<?php
+				<?php
 				// @theme acá se cambia el logo de la navbar
-				print caNavLink($this->request, caGetThemeGraphic($this->request, 'logo-moderno-horizontal.jpg'), "navbar-brand", "", "","");
-?>
+				print caNavLink($this->request, caGetThemeGraphic($this->request, 'logo-moderno-horizontal.jpg'), "navbar-brand logo", "", "","");
+				?>
 			</div>
 
-		<!-- Collect the nav links, forms, and other content for toggling -->
+			<!-- Collect the nav links, forms, and other content for toggling -->
 			<!-- bs-user-navbar-collapse is the user menu that shows up in the toggle menu - hidden at larger size -->
-<?php
-	if ($vb_has_user_links) {
-?>
+			<?php
+				if ($vb_has_user_links) {
+			?>
 			<div class="collapse navbar-collapse" id="user-navbar-toggle">
 				<ul class="nav navbar-nav">
 					<?php print join("\n", $va_user_links); ?>
 				</ul>
 			</div>
-<?php
-	}
-?>
+			<?php
+				}
+			?>
 			<div class="collapse navbar-collapse" id="bs-main-navbar-collapse-1">
-<?php
-	if ($vb_has_user_links) {
-?>
-				<ul class="nav navbar-nav navbar-right" id="user-navbar">
-					<li class="dropdown" style="position:relative;">
-						<a href="#" class="dropdown-toggle icon" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span></a>
-						<ul class="dropdown-menu"><?php print join("\n", $va_user_links); ?></ul>
-					</li>
-				</ul>
-<?php
-	}
-?>
 				<form class="navbar-form navbar-right" role="search" action="<?php print caNavUrl($this->request, '', 'MultiSearch', 'Index'); ?>">
 					<div class="formOutline">
 						<div class="form-group">
@@ -147,13 +125,29 @@
 						})
 					});
 				</script>
+
 				<ul class="nav navbar-nav navbar-right menuItems">
-					<li <?php print ($this->request->getController() == "About") ? 'class="active"' : ''; ?>><?php print caNavLink($this->request, _t("About"), "", "", "About", "Index"); ?></li>
-					<?php print $this->render("pageFormat/browseMenu.php"); ?>	
-					<li <?php print (($this->request->getController() == "Search") && ($this->request->getAction() == "advanced")) ? 'class="active"' : ''; ?>><?php print caNavLink($this->request, _t("Advanced Search"), "", "", "Search", "advanced/objects"); ?></li>
-					<li <?php print ($this->request->getController() == "Gallery") ? 'class="active"' : ''; ?>><?php print caNavLink($this->request, _t("Gallery"), "", "", "Gallery", "Index"); ?></li>
-					<li <?php print ($this->request->getController() == "Collections") ? 'class="active"' : ''; ?>><?php print caNavLink($this->request, _t("Collections"), "", "", "Collections", "index"); ?></li>					
-					<li <?php print ($this->request->getController() == "Contact") ? 'class="active"' : ''; ?>><?php print caNavLink($this->request, _t("Contact"), "", "", "Contact", "Form"); ?></li>
+				   <li class="first-item nav-item<?php print ($browsing_objects) ? ' active' : ''; ?>">
+				   	<a 
+				   		class="nav-link" 
+				   		href="<?php 
+				   			print caNavUrl($this->request, '', 'Browse', 'objects',
+				   					array('view' => 'image')); ?>"
+				   	><?php print _t("Works"); ?></a>
+				   </li>
+				   <li class="nav-item<?php print ($browsing_entities) ? ' active' : ''; ?>">
+				   	<a 
+				   		class="nav-link" 
+				   		href="<?php 
+				   			print caNavUrl($this->request, '', 'Browse', 'entities',
+										array('view' => 'list'));
+				   			?>"
+				   	><?php print _t("Artists"); ?></a>
+				   </li><?php //para no mostrar resumen de busqueda usar -> ?front=1 ?>
+					<li class="nav-item<?php print ($this->request->getController() == "About") ? ' active' : ''; ?>"><?php print caNavLink($this->request, _t("About"), "nav-link", "", "About", "Index"); ?></li>
+					<li class="nav-item"><a class="nav-link" href="https://www.museomoderno.org/" title="Museo Moderno"><?php print _t("Museum"); ?></a><li>
+					<li class="nav-item d-lg-none"><a href="#" class="nav-link" data-toggle="modal" data-target="#search_overlay">Búsqueda</a></li>
+					<li class="nav-item search-icon-item d-none d-lg-block d-xl-block"><a href="#" class="nav-link" data-toggle="modal" data-target="#search_overlay"><i class="fa fa-search"></i></a></li>
 				</ul>
 			</div><!-- /.navbar-collapse -->
 		</div><!-- end container -->

@@ -1,23 +1,52 @@
+// Global Variables
+
+/* 
+Tipografía:
+    Para cambiar las fuentes del tema, importar las mismas en el archivo _fonts.scss
+    Luego cambiar las 3 variables aquí abajo con el nombre de la tipografía correspondiente,
+    esto hace que cambien en todo el theme
+*/
+$primary-font: "MuseoModerno";
+$secondary-font: "Work Sans";
+$default-font: "Roboto";
+
+// Import of all other sass files
 /* @import "../node_modules/bootstrap/scss/bootstrap"; */
-@import "original_styles";
+@import "original-styles";
 @import "fonts";
+@import "helpers";
+@import "common-elements";
 @import "home";
-@import "details_object";
+@import "navbar";
+@import "details-object";
+@import "metadata-tables";
 
-$rojo: #ff0000;
-$verde: #00ff00;
+// Favicon import
+$fa-font-path: '~@fortawesome/fontawesome-free/webfonts'; 
+@import '~@fortawesome/fontawesome-free/scss/fontawesome';
+@import '~@fortawesome/fontawesome-free/scss/solid';
+@import '~@fortawesome/fontawesome-free/scss/regular';
 
+
+// Global styles
 body {
-    font-family: 'MuseoModerno', Roboto, sans-serif;
+    font-family: $secondary-font, $default-font, sans-serif;
+    font-size: 16px;
+    color: black;
 }
 
-.navbar-default {
-    .navbar-nav {
-        li {
-            a {
-                color: $verde;
-            }
+// Every style should be inside the .container class to override Bootstrap styles
+// This allows us to use the SASS magic
+
+// TODO check if there's a better way to override Bootstrap, this is small workaround
+.container {
+    a {
+        color: black;
+        transition: 0.03s all;
+        &:hover {
+            color: #323232; 
+            opacity: 0.7;
+            text-decoration: underline;
         }
-            
     }
 }

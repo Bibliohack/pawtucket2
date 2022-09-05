@@ -1,0 +1,9 @@
+.metadata-grid {
+    max-width: 950px;
+
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    grid-auto-rows: 50px;
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
+}

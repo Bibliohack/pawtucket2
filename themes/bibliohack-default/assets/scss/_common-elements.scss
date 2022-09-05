@@ -1,0 +1,25 @@
+// Right and left navbars
+
+
+// Object - Entity Headers
+.header {
+    text-align: center;
+    h2 { // Author/s of entity/object
+        font-size: 2.75rem;
+        font-family: $primary-font, $default-font, sans-serif;
+    }
+
+    h3 { // Name of entity/object
+        font-family: $secondary-font, $default-font, sans-serif;
+        font-weight: normal;
+        font-size: 1.15rem;
+        font-style: italic;
+        color: #212529;
+    }
+
+    // a {
+    //     &:hover{
+    //         color: black;
+    //     }
+    // }
+}

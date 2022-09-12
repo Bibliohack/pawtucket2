@@ -1,9 +1,59 @@
-.metadata-grid {
-    max-width: 950px;
+.grid-container {
+    width: 100%;
+    margin: 20px 0;
+    .metadata-grid {
+        max-width: 850px;
+        position: relative;
+        display: grid;
+        grid-template-columns: 1fr 2fr;
+        grid-auto-rows: minmax(50px, auto);
+        grid-column-gap: 20px;
+        grid-row-gap: 0px;
 
-    display: grid;
-    grid-template-columns: 1fr 2fr;
-    grid-auto-rows: 50px;
-    grid-column-gap: 0px;
-    grid-row-gap: 0px;
+        .metadata-item {
+            display: flex;
+            align-items: flex-start;
+            &:nth-of-type(odd) {
+                padding-left: 10px;
+                &::before {
+                    // Esto es la linea que separa las filas de la tabla
+                    content: '';
+                    display: block;
+                    width: 100%;
+                    height: 1px;
+                    background: #dee2e6;
+                    position: absolute;
+                    left: 0;
+                }
+            }
+            &:nth-of-type(even) {
+                padding-right: 10px;
+            }
+            &:last-of-type {
+                &::after {
+                    // Esto es la linea debajo de la última fila
+                    content: '';
+                    display: block;
+                    width: 100%;
+                    height: 1px;
+                    background: #dee2e6;
+                    position: absolute;
+                    left: 0;
+                    bottom: 0;
+                }
+            }
+
+            .metadata-item-title {
+                display: flex;
+                align-items: center;
+                height: 100%;
+            }
+
+            .metadata-item-content {
+                display: flex;
+                align-items: center;
+                height: 100%;
+            }
+        }
+    }
 }

@@ -155,12 +155,14 @@
 		include 'ca_objects_metadata_table.php';
 	?>
 	
-	<!-- TODO biblio sacar este navbar right -->
-	<div class='navLeftRight col-xs-1 col-sm-1 col-md-1 col-lg-1'>
+	<!-- TODO: biblio sacar este navbar right -->
+	<!-- <div class='navLeftRight col-xs-1 col-sm-1 col-md-1 col-lg-1'>
 		<div class="detailNavBgRight">
 			{{{nextLink}}}
-		</div><!-- end detailNavBgLeft -->
-	</div><!-- end col -->
+		</div> -->
+		<!-- end detailNavBgLeft -->
+	<!-- </div> -->
+	<!-- end col -->
 </div><!-- end row -->
 
 <script type='text/javascript'>

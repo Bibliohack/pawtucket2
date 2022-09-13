@@ -16,6 +16,7 @@ $default-font: "Roboto";
 @import "fonts";
 @import "helpers";
 @import "common-elements";
+@import "carousel";
 @import "home";
 @import "navbar";
 @import "footer";
@@ -42,6 +43,9 @@ body {
 
 // TODO: check if there's a better way to override Bootstrap, this is small workaround
 .container {
+    @media (min-width: 768px) {
+        max-width: 80vw;
+    }
     a {
         color: black;
         transition: 0.03s all;

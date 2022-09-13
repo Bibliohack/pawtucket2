@@ -1,6 +1,46 @@
-h1{
-  color:red;
-  &:hover{
-    color:green;
-  }
+.home-page {
+    font-family: $secondary-font;
+    .row {
+       margin-top: 80px;
+    }
+    h1 {
+        font-family: $primary-font;
+        font-size: 50px;
+        color: #323232;
+        margin-bottom: 0;
+    }
+    h2 {
+        font-size: 24px;
+        color: #424242;
+        width: 85%;
+        line-height: 1.55;
+        margin-top: 15px;
+    }
+    h3 {
+        text-align: center;
+    }
+
+    .home-search-form {
+        .searchbar {
+            border: 1px solid #ccc;
+            position: relative;
+            border-radius: 2px;
+            display: flex;
+            flex-flow: row nowrap;
+            align-items: center;
+            .form-group {
+                width: 95%;
+                display: inline-block;
+                margin: 0;
+                .form-control {
+                    border: none;
+                    box-shadow: none;
+                    font-size: 20px;
+                }
+            }
+            .btn-search {
+                font-size: 20px;
+            }
+        }
+    }
 }

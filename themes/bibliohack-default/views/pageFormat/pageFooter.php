@@ -34,14 +34,14 @@
 		<!-- @theme  A continuación está el footer donde hay que cambiar los textos, links e íconos para poner la data correcta del lugar -->
 		<!-- start footer -->
 		<footer id="footer" class="footer container">
-			<div class="row justify-content-between footer-container">
-				<div class="col-md-2 d-none d-md-block">
+			<div class="row justify-content-between footer-content">
+				<div class="institution-logo col-md-2 d-none d-md-block">
 					<?php
 					// @theme acá se cambia el logo de la institución del footer
-					print caNavLink($this->request, caGetThemeGraphic($this->request, 'logo-moderno-vertical.jpg'), "brand-logo", "", "","");
+					print caNavLink($this->request, caGetThemeGraphic($this->request, "logo-moderno-vertical.jpg"), "brand-logo", "", "","");
 					?>
 				</div>
-				<div class="col-12 col-md-8 footer-text">
+				<div class="col-12 col-md-8 institution-info">
 					<ul class="social-icons">
 						<li class="list-inline-item circular-icon">
 							<a href="https://www.facebook.com/museodeartemodernodebuenosaires" 
@@ -62,9 +62,9 @@
 							</a>
 						</li>
 						<li class="list-inline-item circular-icon">
-								<a href="https://artsandculture.google.com/partner/museo-de-arte-moderno-de-buenos-aires-museo-moderno" 
+								<a href="https://www.tiktok.com/@modernoba" 
 								target="_blank">
-								<i class="fa-brands fa-google"></i>
+								<i class="fa-brands fa-tiktok"></i>
 								</a>
 						</li>
 						<li class="list-inline-item circular-icon">
@@ -73,32 +73,30 @@
 								<i class="fa-brands fa-youtube"></i>
 							</a>
 						</li>
+						<li class="list-inline-item circular-icon">
+								<a href="https://artsandculture.google.com/partner/museo-de-arte-moderno-de-buenos-aires-museo-moderno" 
+								target="_blank">
+								<i class="fa-brands fa-google"></i>
+								</a>
+						</li>
 					</ul>
-					<p>© 2017 Museo de Arte Moderno de Buenos Aires</p>
-					<p>Av. San Juan 350. San Telmo. Buenos Aires. C1147AAO.<br>Tel: +54 011 4361-6919</p>
+					<div class="institution-info">
+						<p>© 2017 Museo de Arte Moderno de Buenos Aires</p>
+						<p>Av. San Juan 350. San Telmo. Buenos Aires. C1147AAO.</p>
+						<p>Tel: +54 011 4361-6919</p>
+ 					</div>
 				</div>
-				<div class="col-6 d-md-none">
-					<a 
-						class="left-block" 
-						href="<?php 
-							print caNavUrl($this->request,'','',''); ?>" 
-						id="mm-footerbrand"
-					>MuseoModerno</a>
-				</div>
-				<div class="col-6 col-md-2">
-					<a 
-						class="right-block" 
-						href="http://www.buenosaires.gob.ar/" 
-						id="mm-bsasbrand"
-					>BsAsCiudad</a>
+				<div class="institution-logo second-institution col-6 col-md-2">
+					<a class="brand-logo" href="http://www.buenosaires.gob.ar/">
+						<?php print caGetThemeGraphic($this->request, "logo-buenos-aires-ciudad.jpg"); ?>
+					</a>
 				</div> 
 			</div><!-- end footer-container -->
-			<div style="font-size:12px; text-align:right; color:#999; padding:0 0.5rem 0.35rem 0;"
-			  class="ca-bbh">
+			<div class="ca-bibliohack-links">
 			  <p>
-				  <a style="color:#999;" href="http://collectiveaccess.org">collective access</a>
-				  <span>/</span>
-				  <a style="color:#999;" href="http://bibliohack.org">bibiohack</a>
+				  <a href="http://collectiveaccess.org">collective access</a>
+				  <span> / </span>
+				  <a href="http://bibliohack.org">bibiohack</a>
 			  </p>
 	   		</div>	
 		</footer><!-- end footer -->

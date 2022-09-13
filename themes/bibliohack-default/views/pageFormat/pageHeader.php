@@ -52,105 +52,118 @@
 ?><!DOCTYPE html>
 <html lang="en">
 	<head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0"/>
-	<?php print MetaTagManager::getHTML(); ?>
-	<?php print AssetLoadManager::getLoadHTML($this->request); ?>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0"/>
+		<?php print MetaTagManager::getHTML(); ?>
+		<?php print AssetLoadManager::getLoadHTML($this->request); ?>
 
-	<title><?php print (MetaTagManager::getWindowTitle()) ? MetaTagManager::getWindowTitle() : $this->request->config->get("app_display_name"); ?></title>
-	
-	<!-- @theme el siguiente script es para que levante webpack (y todos los archivos de estilos de sass) -->
-	<script src="<?php print $this->request->getThemeUrlPath(); ?>/assets/js/app.js"></script>
+		<title><?php print (MetaTagManager::getWindowTitle()) ? MetaTagManager::getWindowTitle() : $this->request->config->get("app_display_name"); ?></title>
+		
+		<!-- @theme el siguiente script es para que levante webpack (y todos los archivos de estilos de sass) -->
+		<script src="<?php print $this->request->getThemeUrlPath(); ?>/assets/js/app.js"></script>
 
-	<script type="text/javascript">
-		jQuery(document).ready(function() {
-    		jQuery('#browse-menu').on('click mouseover mouseout mousemove mouseenter',function(e) { e.stopPropagation(); });
-    	});
-	</script>
-<?php
-	if(Debug::isEnabled()) {		
-		//
-		// Pull in JS and CSS for debug bar
-		// 
-		$o_debugbar_renderer = Debug::$bar->getJavascriptRenderer();
-		$o_debugbar_renderer->setBaseUrl(__CA_URL_ROOT__.$o_debugbar_renderer->getBaseUrl());
-		print $o_debugbar_renderer->renderHead();
-	}
-?>
-</head>
-<body>
-	<nav class="navbar yamm" role="navigation">
-		<div class="container menuBar">
-			<!-- Brand and toggle get grouped for better mobile display -->
-			<div class="navbar-logo-container">
-				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-main-navbar-collapse-1">
-					<span class="sr-only">Toggle navigation</span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-				</button>
+		<script type="text/javascript">
+			jQuery(document).ready(function() {
+				jQuery('#browse-menu').on('click mouseover mouseout mousemove mouseenter',function(e) { e.stopPropagation(); });
+			});
+		</script>
+		<?php
+			if(Debug::isEnabled()) {		
+				//
+				// Pull in JS and CSS for debug bar
+				// 
+				$o_debugbar_renderer = Debug::$bar->getJavascriptRenderer();
+				$o_debugbar_renderer->setBaseUrl(__CA_URL_ROOT__.$o_debugbar_renderer->getBaseUrl());
+				print $o_debugbar_renderer->renderHead();
+			}
+		?>
+	</head>
+	<body>
+		<nav class="navbar yamm" role="navigation">
+			<div class="container menuBar">
+				<!-- Brand and toggle get grouped for better mobile display -->
+				<div class="navbar-logo-container">
+					<!-- <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-main-navbar-collapse-1">
+						<span class="sr-only">Toggle navigation</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button> -->
+					<button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+						<span class="hamburger ham-top"></span>
+						<span class="hamburger ham-middle"></span>
+						<span class="hamburger ham-bottom"></span>
+					</button>
+					<?php
+					// @theme acá se cambia el logo de la navbar
+					print caNavLink($this->request, caGetThemeGraphic($this->request, 'logo-moderno-horizontal.jpg'), "navbar-brand logo", "", "","");
+					?>
+				</div>
+
+				<!-- Collect the nav links, forms, and other content for toggling -->
+				<!-- bs-user-navbar-collapse is the user menu that shows up in the toggle menu - hidden at larger size -->
 				<?php
-				// @theme acá se cambia el logo de la navbar
-				print caNavLink($this->request, caGetThemeGraphic($this->request, 'logo-moderno-horizontal.jpg'), "navbar-brand logo", "", "","");
+					if ($vb_has_user_links) {
 				?>
-			</div>
-
-			<!-- Collect the nav links, forms, and other content for toggling -->
-			<!-- bs-user-navbar-collapse is the user menu that shows up in the toggle menu - hidden at larger size -->
-			<?php
-				if ($vb_has_user_links) {
-			?>
-			<div class="collapse navbar-collapse" id="user-navbar-toggle">
-				<ul class="nav navbar-nav">
-					<?php print join("\n", $va_user_links); ?>
-				</ul>
-			</div>
-			<?php
-				}
-			?>
-			<div class="collapse navbar-collapse" id="bs-main-navbar-collapse-1">
-				<form class="navbar-form navbar-right" role="search" action="<?php print caNavUrl($this->request, '', 'MultiSearch', 'Index'); ?>">
-					<div class="formOutline">
-						<div class="form-group">
-							<input type="text" class="form-control" id="headerSearchInput" placeholder="Search" name="search" autocomplete="off" />
-						</div>
-						<button type="submit" class="btn-search" id="headerSearchButton"><span class="glyphicon glyphicon-search"></span></button>
-					</div>
-				</form>
-				<script type="text/javascript">
-					$(document).ready(function(){
-						$('#headerSearchButton').prop('disabled',true);
-						$('#headerSearchInput').on('keyup', function(){
-							$('#headerSearchButton').prop('disabled', this.value == "" ? true : false);     
-						})
-					});
-				</script>
-
-				<ul class="nav navbar-nav navbar-right menuItems">
-				   <li class="first-item nav-item<?php print ($browsing_objects) ? ' active' : ''; ?>">
-				   	<a 
-				   		class="nav-link" 
-				   		href="<?php 
-				   			print caNavUrl($this->request, '', 'Browse', 'objects',
-				   					array('view' => 'image')); ?>"
-				   	><?php print _t("Works"); ?></a>
-				   </li>
-				   <li class="nav-item<?php print ($browsing_entities) ? ' active' : ''; ?>">
-				   	<a 
-				   		class="nav-link" 
-				   		href="<?php 
-				   			print caNavUrl($this->request, '', 'Browse', 'entities',
-										array('view' => 'list'));
-				   			?>"
-				   	><?php print _t("Artists"); ?></a>
-				   </li><?php //para no mostrar resumen de busqueda usar -> ?front=1 ?>
-					<li class="nav-item<?php print ($this->request->getController() == "About") ? ' active' : ''; ?>"><?php print caNavLink($this->request, _t("About"), "nav-link", "", "About", "Index"); ?></li>
-					<li class="nav-item"><a class="nav-link" href="https://www.museomoderno.org/" title="Museo Moderno"><?php print _t("Museum"); ?></a><li>
-					<li class="nav-item d-lg-none"><a href="#" class="nav-link" data-toggle="modal" data-target="#search_overlay">Búsqueda</a></li>
-					<li class="nav-item search-icon-item d-none d-lg-block d-xl-block"><a href="#" class="nav-link" data-toggle="modal" data-target="#search_overlay"><i class="fa fa-search"></i></a></li>
-				</ul>
-			</div><!-- /.navbar-collapse -->
-		</div><!-- end container -->
-	</nav>
-	<div class="container"><div class="row"><div class="col-xs-12">
-		<div id="pageArea" <?php print caGetPageCSSClasses(); ?>>
+				<div class="collapse navbar-collapse" id="user-navbar-toggle">
+					<ul class="nav navbar-nav">
+						<?php print join("\n", $va_user_links); ?>
+					</ul>
+				</div>
+				<?php
+					}
+				?>
+				<div class="collapse navbar-collapse" id="bs-main-navbar-collapse-1">
+					<ul class="nav navbar-nav navbar-right menuItems">
+						<li class="first-item nav-item<?php print ($browsing_objects) ? ' active' : ''; ?>">
+								<a 
+									class="nav-link" 
+									href="<?php 
+										print caNavUrl($this->request, '', 'Browse', 'objects',
+												array('view' => 'image')); ?>"
+								><?php print _t("Works"); ?></a>
+						</li>
+						<li class="nav-item<?php print ($browsing_entities) ? ' active' : ''; ?>">
+								<a 
+									class="nav-link" 
+									href="<?php 
+										print caNavUrl($this->request, '', 'Browse', 'entities',
+													array('view' => 'list'));
+										?>"
+								><?php print _t("Artists"); ?></a>
+						</li><?php //para no mostrar resumen de busqueda usar -> ?front=1 ?>
+						<li class="nav-item <?php print ($this->request->getController() == "About") ? ' active' : ''; ?>">
+							<?php print caNavLink($this->request, _t("About"), "nav-link", "", "About", "Index"); ?>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="https://www.museomoderno.org/" title="Museo Moderno"><?php print _t("Museum"); ?></a>
+						</li>
+						<!-- <li class="nav-item search-icon-item d-none d-lg-block d-xl-block">
+							<a href="#" class="nav-link" data-toggle="modal" data-target="#search_overlay">
+								<i class="fa fa-search"></i>
+							</a>
+						</li> -->
+						<li>
+							<form class="navbar-form navbar-right" role="search" action="<?php print caNavUrl($this->request, '', 'MultiSearch', 'Index'); ?>">
+								<div class="searchbar">
+									<div class="form-group">
+										<input type="text" class="form-control" id="headerSearchInput" placeholder="Search" name="search" autocomplete="off" />
+									</div>
+									<button type="submit" class="btn-search" id="headerSearchButton"><i class="fa fa-search"></i></button>
+								</div>
+							</form>
+							<script type="text/javascript">
+								$(document).ready(function(){
+									$('#headerSearchButton').prop('disabled',true);
+									$('#headerSearchInput').on('keyup', function(){
+										$('#headerSearchButton').prop('disabled', this.value == "" ? true : false);     
+									})
+								});
+							</script>
+						</li>
+					</ul>
+				</div><!-- /.navbar-collapse -->
+			</div><!-- end container -->
+		</nav>
+		<div class="container"><div class="row"><div class="col-xs-12">
+			<div id="pageArea" <?php print caGetPageCSSClasses(); ?>>

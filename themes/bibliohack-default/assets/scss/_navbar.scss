@@ -1,10 +1,13 @@
 .navbar {
     padding: 10px 15px;
-    max-width: 1140px;
+    // max-width: 1140px;
     margin: 0 auto;
     box-shadow: none; // Override Bootstrap
     background-image: none; // Override Bootstrap
 
+    .navbar-toggler {
+        display: none;
+    }
     .navbar-logo-container {
         width: 100%;
         height: 100px;
@@ -23,14 +26,120 @@
     }
 
     .navbar-nav {
+        margin: 0 !important; // Override bootstrap
         li {
             a {
                 font-family: $secondary-font, $default-font, sans-serif;
                 font-size: 1.7rem;
-                font-weight: bold;
+                // font-weight: bold;
                 text-transform: uppercase;
                 letter-spacing: 0.02rem;
             }
+
+            .searchbar{
+                border-bottom: 1px solid #cccccc;
+                position: relative;
+                .form-control {
+                    font-family: $secondary-font;
+                    text-transform: uppercase;
+                    font-size: 17px;
+                }
+                .btn-search {
+                    font-size: 17px;
+                }
+            }
         }
+
     }
+}
+
+/* menu movil */
+
+@media (max-width: 991px){
+	.navbar {
+		position: static;
+		padding: 0 !important;
+		border: none !important;
+        &.navbar {
+            justify-content: flex-end;
+        }
+        .navbar-toggler {
+            display: inline-block;
+            position: fixed;
+            top: 2.75rem;
+            right: 2rem;
+            z-index: 9999;
+            margin: 0;
+            padding: 0;
+            border: none;
+            .collapsed {
+                position: absolute;
+            }
+            .hamburger.ham-top {
+                transform: translateY(10px) rotate(45deg);
+            }
+            .hamburger.ham-middle {
+                opacity: 0;
+            }
+            .hamburger.ham-bottom {
+                transform: translateY(-10px) rotate(-45deg);
+            }
+        }
+        .navbar-collapse {
+            position: fixed;
+            z-index: 9990;
+            width: 100%;
+            background-color: white;
+            left: 0;
+            right: 0;
+            top: 0;
+            &.collapsing {
+                transition: height 0.75s ease;
+            }
+            &.collapsed {
+                .hamburger.ham-top {
+                    transform: rotate(0deg);
+                }
+                .hamburger.ham-middle {
+                    opacity: 1;
+                }
+                .hamburger.ham-bottom {
+                    transform: rotate(0deg);
+                }
+            }
+
+            ul li a {
+                padding-top: 1rem;
+                padding-bottom: 1rem;
+            }
+        }
+        .nav-link {
+            text-transform: uppercase;
+            font-size: 1.5rem !important;
+            letter-spacing: 0.02rem;
+            font-family: museomoderno;
+        }
+	}
+	#navbarSupportedContent .mm-main .nav-item {
+	    margin-left: auto;
+	    margin-right: auto;
+	}
+
+	
+	/* moderno */
+	.navbar ul.mm-main {
+		padding: 2rem;
+	}
+	.navbar .navbar-collapse {
+		border-bottom: 1px solid gray;
+	}
+}
+
+
+.hamburger {
+    background-color: black;
+    height: 4px;
+    width: 29px;
+    display: block;
+    margin: 0 0 6px;
 }

@@ -98,8 +98,8 @@
     .ca-bibliohack-links {
         font-size: 12px;
         text-align: right;
-        color: #999;
-        margin: 15px 30px;
+        color: #777;
+        margin: 15px 30px 15px 0;
         display: block;
         line-height: 15px;
 
@@ -107,8 +107,9 @@
             margin: 0; 
             
             a {
+                color: #777; // Override bootstrap
                 &:hover {
-                    color: #999;
+                    color: #777;
                 }
             }
         }
